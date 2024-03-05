@@ -7,19 +7,19 @@ const cargarBarraNavegacion = () => {
         <nav>
             <ul class="menu">
                 <li>
-                    <a href="#" class="boton-menu active">Inicio</a>
+                    <button id="inicio" class="boton-menu active">Inicio</button>
                 </li>
                 <li>
-                    <a href="#" class="boton-menu">Facultades</a>
+                    <button id="departamentos" class="boton-menu">Departamentos</button>
                 </li>
                 <li>
-                    <a href="#" class="boton-menu">Cursos</a>
+                    <button id="cursos" class="boton-menu">Cursos</button>
                 </li>
                 <li>
-                    <a href="#" class="boton-menu">Registrar</a>
+                    <button id="registrar" class="boton-menu">Registrar</button>
                 </li>
                 <li>
-                    <a href="#" class="boton-menu">Matriculas</a>
+                    <button id="matriculas" class="boton-menu">Matriculas</button>
                 </li>
             </ul>
         </nav>
@@ -34,8 +34,9 @@ const cargarSeccionInicio = () => {
     seccionInicio.innerHTML = `
 
         <div class="texto-inicio">
-            <h1>Bienvenidos</h1>
-            <h3>Universidad de los Sabios </h3>
+            <h1 class="titulo">Bienvenidos</h1>
+            <h3 class="texto-h3">Universidad de los Sabios </h3>
+            <p class="descripcion">Una institución líder en conocimiento y sabiduría, comprometida con la excelencia académica y la innovación.</p>
         </div>
     
     `
