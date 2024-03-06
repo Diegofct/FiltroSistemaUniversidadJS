@@ -3,7 +3,10 @@ const botonesMenu = document.querySelectorAll(".boton-menu")
 const seccionInicio = document.getElementById('seccion-inicio')
 const seccionNosotros = document.getElementById('seccion-nosotros')
 const seccionContacto = document.getElementById('seccion-contactame')
-const departamentos = document.getElementById('departamentos')
+const seccionDepartamento = document.getElementById('seccion-departamentos')
+const cursos = document.getElementById('cursos')
+const registros = document.getElementById('registrar')
+const matriculas = document.getElementById('matriculas')
 
 const cargarSeccionInicio = () => {
     seccionInicio.innerHTML = `
@@ -51,11 +54,27 @@ botonesMenu.forEach(boton => {
             seccionInicio.style.display = "grid"
             seccionNosotros.style.display = "flex"
             seccionContacto.style.display = "flex"
+            seccionDepartamento.style.display = "none"
 
         } else if (e.currentTarget.id === "departamentos") {
             seccionInicio.style.display = 'none'
             seccionNosotros.style.display = 'none'
             seccionContacto.style.display = 'none'
+
+        } else if (e.currentTarget.id === "cursos") {
+            seccionInicio.style.display = 'none'
+            seccionNosotros.style.display = 'none'
+            seccionContacto.style.display = 'none'
+            
+        } else if (e.currentTarget.id === "registrar") {
+            seccionInicio.style.display = 'none'
+            seccionNosotros.style.display = 'none'
+            seccionContacto.style.display = 'none'
+
+        } else if (e.currentTarget.id === "matriculas") {
+            seccionInicio.style.display = 'none'
+            seccionNosotros.style.display = 'none'
+            seccionContacto.style.display = 'none'  
         }
 
     })
