@@ -1,4 +1,4 @@
-const seccionDepartamentos = document.getElementById('seccion-departamentos')
+// const seccionDepartamentos = document.getElementById('seccion-departamentos')
 
 const listaDepartamentos = []
 
@@ -15,11 +15,13 @@ const loadDepartamentos = async () => {
 
         const departamentos = await respuesta.json();
         listaDepartamentos.push(...departamentos);
+        
 
     } catch (error) {
         console.log("Error al cargar los departamentos", error.message)
     }
 }
+
 
 const mostrarListadoDepartamentos = async () => {
     await loadDepartamentos()
@@ -30,5 +32,5 @@ const mostrarListadoDepartamentos = async () => {
         li.textContent = `id: ${departamento.id}, Nombre: ${departamento.nombre}`
         ul.appendChild(li)
     })
-    seccionDepartamentos.appendChild(ul)
+    seccionDepartamento.appendChild(ul)
 }
