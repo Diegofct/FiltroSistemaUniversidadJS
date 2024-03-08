@@ -24,13 +24,40 @@ const loadDepartamentos = async () => {
 
 
 const mostrarListadoDepartamentos = async () => {
-    await loadDepartamentos()
+    await loadDepartamentos();
+    let html = `
+        <div id="carouselExampleCaptions" class="carousel slide">
+            <div class="carousel-inner">
+    `;
 
-    const ul = document.createElement('ul')
-    listaDepartamentos.forEach(departamento => {
-        const li = document.createElement('li')
-        li.textContent = `id: ${departamento.id}, Nombre: ${departamento.nombre}`
-        ul.appendChild(li)
-    })
-    seccionDepartamento.appendChild(ul)
-}
+    listaDepartamentos.forEach((departamento, index) => {
+        const activeClass = index === 0 ? 'active' : ''; // Añade la clase 'active' al primer elemento
+        html += `
+            <div class="carousel-item ${activeClass}">
+                <img src="img/medicina.jpg" class="d-block w-100" alt="${departamento.nombre}">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>${departamento.nombre}</h5>
+                    <button class="btnSlide">Ver detalles</button>
+                </div>
+            </div>
+        `;
+    });
+
+    // Agrega controles y navegación al carrusel
+    html += `
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    `;
+
+    seccionDepartamento.innerHTML = html;
+};
+
+

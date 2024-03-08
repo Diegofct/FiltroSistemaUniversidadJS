@@ -17,7 +17,7 @@ const cargarSeccionInicio = () => {
         </div>
     
     `
-    main.appendChild(seccionInicio)
+    // main.appendChild(seccionInicio)
 }
 
 cargarSeccionInicio()
@@ -32,7 +32,7 @@ const cargarSeccionNosotros = () => {
         </div>
     
     `
-    main.appendChild(seccionNosotros)
+    // main.appendChild(seccionNosotros)
 }
 
 cargarSeccionNosotros()
@@ -47,7 +47,7 @@ const cargarSeccionContactame = () => {
     </div>
 
     `
-    main.appendChild(seccionContacto)
+    // main.appendChild(seccionContacto)
 }
 
 cargarSeccionContactame()
