@@ -36,7 +36,7 @@ btnInicio.addEventListener('click', () => {
 btnDpto.addEventListener('click', async() => {
     ocultarActiveBtn();
     ocultarElementos()
-    seccionDepartamento.style.display = "block"
+    seccionDepartamento.style.display = "flex"
     btnDpto.classList.add("active")
     await loadDepartamentos()
     mostrarListadoDepartamentos()
@@ -45,9 +45,10 @@ btnDpto.addEventListener('click', async() => {
 btnCursos.addEventListener('click', async() => {
     ocultarActiveBtn();
     ocultarElementos()
-    seccionCursos.style.display = "block"
+    seccionCursos.style.display = "grid"
     btnCursos.classList.add("active")
     await loadCursos()
+    mostrarCursos()
 })
 
 btnRegistrar.addEventListener('click', () => {

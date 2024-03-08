@@ -20,7 +20,7 @@ ul {
     list-style-type: none;
 }
 
-a {
+.boton-menu {
     text-decoration: none;
 }
 
@@ -180,4 +180,39 @@ main {
     border-radius: 10px;
 }
 
+#seccion-departamentos {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
 
+.carousel-item img{
+    border-radius: 30px;
+}
+
+.carousel-caption h5 {
+    font-size: 2rem;
+    color: green;
+}
+
+.carousel-caption button {
+    background: linear-gradient(to bottom right, lightgrey 40%, gray);
+    border: none;
+    border-radius: 10px;
+    width: 110px;
+    height: 40px;
+}
+
+.carousel-caption button:hover {
+    background: linear-gradient(to bottom right, gray, lightgrey 40%);
+    border: none;
+    border-radius: 10px;
+    width: 110px;
+    height: 40px;
+}
+
+#seccion-cursos {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}

@@ -1,5 +1,3 @@
-// const seccionDepartamentos = document.getElementById('seccion-departamentos')
-
 const listaDepartamentos = []
 
 const loadDepartamentos = async () => {
@@ -35,9 +33,9 @@ const mostrarListadoDepartamentos = async () => {
         html += `
             <div class="carousel-item ${activeClass}">
                 <img src="img/medicina.jpg" class="d-block w-100" alt="${departamento.nombre}">
-                <div class="carousel-caption d-none d-md-block">
+                <div id="slide-${departamento.nombre.replaceAll(" ","-")}" class="carousel-caption d-none d-md-block">
                     <h5>${departamento.nombre}</h5>
-                    <button class="btnSlide">Ver detalles</button>
+                    <button class="btnSlide" id="btn-${departamento.nombre.replaceAll(" ","")}">Ver detalles</button>
                 </div>
             </div>
         `;
@@ -59,5 +57,3 @@ const mostrarListadoDepartamentos = async () => {
 
     seccionDepartamento.innerHTML = html;
 };
-
-
