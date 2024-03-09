@@ -14,13 +14,15 @@ const ocultarActiveBtn = () => {
 }
 
 const ocultarElementos = () => {
-    seccionInicio.style.display = "none";
-    seccionNosotros.style.display = "none";
-    seccionContacto.style.display = "none";
-    seccionDepartamento.style.display = "none";
-    seccionCursos.style.display = "none";
-    seccionRegistros.style.display = "none";
-    seccionMatriculas.style.display = "none"
+    seccionInicio.style.display = "none"
+    seccionNosotros.style.display = "none"
+    seccionContacto.style.display = "none"
+    seccionDepartamento.style.display = "none"
+    seccionCursos.style.display = "none"
+    seccionFormAlumnos.style.display = "none"
+    seccionFormProfesores.style.display = "none"
+    seccionFormAsignatura.style.display = "none"
+    
 }
 
 
@@ -51,11 +53,19 @@ btnCursos.addEventListener('click', async() => {
     mostrarCursos()
 })
 
-btnRegistrar.addEventListener('click', () => {
+btnRegistrar.addEventListener('click', async () => {
     ocultarActiveBtn()
     btnRegistrar.classList.add('active')
     ocultarElementos()
-    seccionRegistros.style.display = "block"
+    seccionFormAlumnos.style.display = "flex"
+    seccionFormAlumnos.style.height = "100%"
+    seccionFormProfesores.style.display = "flex"
+    seccionFormProfesores.style.height = "100%"
+    seccionFormAsignatura.style.display = "flex"
+    seccionFormAsignatura.style.height = "100%"
+    mostrarFormularioAlumno()
+    mostrarFormularioProfesor()
+    mostrarFormularioAsignatura()
 })
 
 btnMatriculas.addEventListener('click', () => {
