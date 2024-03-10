@@ -22,7 +22,9 @@ const ocultarElementos = () => {
     seccionFormAlumnos.style.display = "none"
     seccionFormProfesores.style.display = "none"
     seccionFormAsignatura.style.display = "none"
-    
+    seccionListadoAlumnos.style.display = "none"
+    seccionListadoProfesores.style.display = "none"
+    seccionMatriculas.style.display = "none"
 }
 
 

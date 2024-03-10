@@ -5,8 +5,11 @@ const seccionContacto = document.getElementById('seccion-contactame')
 const seccionDepartamento = document.getElementById('seccion-departamentos')
 const seccionCursos = document.getElementById('seccion-cursos')
 const seccionFormAlumnos = document.getElementById('seccion-formAlumno')
+const seccionListadoAlumnos = document.getElementById('listado-alumnos')
 const seccionFormProfesores = document.getElementById('seccion-formProfesores')
+const seccionListadoProfesores = document.getElementById('listado-profesores')
 const seccionFormAsignatura = document.getElementById('seccion-formAsignatura')
+const seccionMatriculas = document.getElementById('seccion-matriculas')
 
 const cargarSeccionInicio = () => {
     seccionInicio.innerHTML = `
