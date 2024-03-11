@@ -35,12 +35,12 @@ const mostrarListadoDepartamentos = async () => {
                 <img src="img/medicina.jpg" class="d-block w-100" alt="${departamento.nombre}">
                 <div id="slide-${departamento.nombre.replaceAll(" ","-")}" class="carousel-caption d-none d-md-block">
                     <h5>${departamento.nombre}</h5>
-                    <button class="btnSlide" id="btn-${departamento.nombre.replaceAll(" ","")}">Ver detalles</button>
+                    <button class="btnSlide" id="btn-${departamento.nombre.replaceAll(" ","")}" onclick="mostraProgramas${departamento.nombre.replaceAll(" ","")}()">Ver detalles</button>
                 </div>
             </div>
         `;
-    });
 
+    });
     // Agrega controles y navegación al carrusel
     html += `
             </div>
@@ -57,3 +57,31 @@ const mostrarListadoDepartamentos = async () => {
 
     seccionDepartamento.innerHTML = html;
 };
+
+
+async function mostraProgramasDepartamentodeInformática(){
+    await loadProgramas()
+    seccionDepartamento.style.display = "none"
+    seccionProgramas.innerHTML = ""
+    listaProgramas.forEach(programa =>{
+        console.log(programa)
+        if(programa.nombre === "Ingeniería de Sistemas"){
+            seccionProgramas.innerHTML += `
+            <div class="card">
+                <h5 class="card-header">${programa.nombre}</h5>
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">${programa.nivel}.</p>
+                    <a href="#" class="btn btn-primary" onclick="volverAlSlide()">Volver</a>
+                </div>
+            </div>
+        `
+        }
+
+    })
+} 
+
+const volverAlSlide = () => {
+    seccionProgramas.style.display = "none"
+    seccionDepartamento.style.display = "flex"
+}

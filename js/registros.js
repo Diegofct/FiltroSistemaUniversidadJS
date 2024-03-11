@@ -14,6 +14,7 @@ const loadAlumnos = async() => {
 
         const registros = await respuesta.json();
         listaAlumnos.push(...registros);
+        console.log(listaAlumnos)
 
     } catch (error) {
         console.log("Error al cargar los alumnos", error.message)
@@ -307,7 +308,7 @@ const volverFormularioProfesores = () => {
 // ---------------------------------------- SECCION DE REGISTRO ASIGNATURAS ----------------------------------------
 const loadAsignaturas = async () => {
     try {
-        listaAsignaturas.length = 0
+        listaAsignatura.length = 0
         const respuesta = await fetch(`http://localhost:3000/asignaturas`)
         console.log(respuesta)
 
@@ -316,9 +317,30 @@ const loadAsignaturas = async () => {
         }
 
         const asignaturas = await respuesta.json()
-        listaAsignaturas.push(...asignaturas)
+        listaAsignatura.push(...asignaturas)
     } catch (error) {
         console.log("Error al cargar las asignaturas", error.message)
+    }
+}
+
+const guardarAsignaturas = async(nuevaAsignatura) => {
+    try {
+        const respuesta = await fetch(`http://localhost:3000/asignaturas`, {
+            method:'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(nuevaAsignatura)
+        })
+
+        if (!respuesta.ok) {
+            throw new Error('Error al guardar la asignatura. Estado: ',respuesta.status);
+        }
+
+        const asignaturaCreada = await respuesta.json();
+        console.log("Asignatura creada:", asignaturaCreada)
+    } catch (error) {
+        console.error("Error al guardar la asignatura",error.message);
     }
 }
 
@@ -335,15 +357,17 @@ const mostrarFormularioAsignatura = () => {
                             <option value="" disabled selected hidden>- Seleccione un curso -</option>
                             ${generarOptionsCursos()}
                         </select>
-                        <input id="inputCodigo" type="text" placeholder="Código de la asignatura" readonly>
                         <input id="inputCreditos" type="number" placeholder="Créditos" required>
                         <select id="selectProfesorId" required>
                             <option value="" disabled selected hidden>- Seleccione un profesor -</option>
                             ${generarOptionsProfesores()}
                         </select>
                         <input id="inputCuposDisponibles" type="number" placeholder="Cupos disponibles" value="20" readonly>
-                        <input id="inputProgramaId" type="text" placeholder="Programa ID" required>
-                        <select id="selectDia1" required>
+                        <select id="selectProgramas" required>
+                            <option value="" disabled selected hidden>- Seleccione el programa -</option>
+                            ${generarOptionProgramas()}
+                        </select>
+                        <select id="selectDia" required>
                             <option value="" disabled selected hidden>- Seleccione un día -</option>
                             <option value="Lunes">Lunes</option>
                             <option value="Martes">Martes</option>
@@ -352,15 +376,17 @@ const mostrarFormularioAsignatura = () => {
                             <option value="Viernes">Viernes</option>
                             <option value="Sábado">Sábado</option>
                         </select>
-                        <input id="inputHoraInicio1" type="text" placeholder="Hora de inicio 1" required>
-                        <input id="inputHoraFin1" type="text" placeholder="Hora de fin 1" required>
-                        <select id="selectSalonId1" required>
+                        <label>Elige la hora</label>
+                        <input id="inputHoraInicio" type="time" placeholder="Hora de inicio" required>
+                        <input id="inputHoraFin" type="time" placeholder="Hora de fin" required>
+                        <select id="selectSalonId" required>
                             <option value="" disabled selected hidden>- Seleccione un salón -</option>
                             ${generarOptionsSalones()}
                         </select>
                     </div>
                     <div class="abajo-content-container">
                         <button id="btnRegistrarAsignatura" onClick="crearAsignatura()">Registrar Asignatura</button>
+                        <button id="btnVerListado" onClick="mostrarListaAsignaturas()">Ver Listado</button>
                     </div>
                 </div>
             </div>
@@ -368,70 +394,55 @@ const mostrarFormularioAsignatura = () => {
     `;
 }
 
-const crearAsignatura = async() => {
+const crearAsignatura = async () => {
     try {
-        const cursoId = document.getElementById('selectCurso').value;
-        const codigoPeriodo = document.getElementById('selectPeriodo').value;
+        const cursoId = document.getElementById('selectCursoId').value;
+        const creditos = document.getElementById('inputCreditos').value;
+        const profesorId = document.getElementById('selectProfesorId').value;
+        const cuposDisponibles = document.getElementById('inputCuposDisponibles').value;
+        const programaId = document.getElementById('selectProgramas').value;
+        const dia = document.getElementById('selectDia').value;
+        const horaInicio = document.getElementById('inputHoraInicio').value;
+        const horaFin = document.getElementById('inputHoraFin').value;
+        const salonId = document.getElementById('selectSalonId').value;
 
-        // Concatenar el código del curso y el período para formar el código de la asignatura
-        const codigoAsignatura = `${cursoId}-${codigoPeriodo}`;
-
-        const creditos = parseInt(document.getElementById('inputCreditos').value);
-        const profesorId = document.getElementById('selectProfesor').value;
-        let cuposDisponibles = 20; // Inicialmente se asignan 20 cupos disponibles
-
-        // Obtener el horario de clases seleccionado
-        const horarioClases = [];
-        const dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-        for (let i = 0; i < dias.length; i++) {
-            const dia = dias[i];
-            const horaInicio = document.getElementById(`horaInicio${dia}`).value;
-            const horaFin = document.getElementById(`horaFin${dia}`).value;
-            const salonId = document.getElementById(`selectSalon${dia}`).value;
-            if (horaInicio && horaFin && salonId) {
-                horarioClases.push({
+        const nuevaAsignatura = {
+            id: listaAsignatura.length + 1,
+            curso_id: cursoId,
+            creditos: creditos,
+            profesor_id: profesorId,
+            cupos_disponibles: cuposDisponibles,
+            programa_id: programaId,
+            horario_clases: [
+                {
                     dia: dia,
                     hora_inicio: horaInicio,
                     hora_fin: horaFin,
                     salon_id: salonId
-                });
-            }
-        }
-
-        // Crear objeto de nueva asignatura
-        const nuevaAsignatura = {
-            id: listaAsignaturas.length + 1,
-            curso_id: cursoId,
-            codigo: codigoAsignatura,
-            creditos: creditos,
-            profesor_id: profesorId,
-            cupos_disponibles: cuposDisponibles,
-            horario_clases: horarioClases
+                }
+            ]
         };
 
-        // Enviar la solicitud para guardar la asignatura
-        await guardarAsignatura(nuevaAsignatura);
-
-        // Actualizar la lista de asignaturas
+        await guardarAsignaturas(nuevaAsignatura);
         await loadAsignaturas();
 
-        // Limpiar los campos del formulario
         limpiarFormularioAsignatura();
 
-        // Mostrar un mensaje de éxito
         alert("Asignatura creada con éxito");
 
         return nuevaAsignatura;
+
     } catch (error) {
         console.error("Error al crear la asignatura", error.message);
     }
 }
 
+
 const limpiarFormularioAsignatura = () => {
     document.getElementById('inputCreditos').value = '';
-    document.getElementById('selectCurso').value = '';
+    document.getElementById('selectCursoId').value = '';
     document.getElementById('inputCodigo').value = '';
-    document.getElementById('selectProfesor').value = '';
+    document.getElementById('selectProfesorId').value = '';
     
     const dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
     for (let i = 0; i < dias.length; i++) {
@@ -443,10 +454,41 @@ const limpiarFormularioAsignatura = () => {
 }
 
 
+const mostrarListaAsignaturas = async () => {
+    await loadAsignaturas();
+
+    seccionFormAsignatura.style.display = 'none';
+    seccionListaAsignaturas.style.display = 'flex';
+    seccionListaAsignaturas.style.height = "100%";
+
+    const ul = document.createElement('ul');
+
+    for (const asignatura of listaAsignatura) {
+        const li = document.createElement('li');
+        li.textContent = `id: ${asignatura.id}, Nombre: ${asignatura.codigo}`;
+        ul.appendChild(li);
+    }
+
+    // Eliminar el contenido anterior del contenedor
+    seccionListaAsignaturas.innerHTML = "";
+
+    // Agregar la nueva lista al contenedor
+    seccionListaAsignaturas.appendChild(ul);
+
+    const volverButton = document.createElement('button');
+    volverButton.textContent = 'Volver al Formulario';
+    volverButton.addEventListener('click', volverFormularioAsignaturas);
+    seccionListaAsignaturas.appendChild(volverButton);
+}
+
+
+const volverFormularioAsignaturas = () => {
+    seccionListaAsignaturas.style.display = "none"
+    seccionFormAsignatura.style.display = "flex"
+}
 
 const generarOptionsCursos = () => {
     let options = '';
-    // Aquí iteras sobre la lista de cursos y generas las opciones
     listaCursos.forEach(curso => {
         options += `<option value="${curso.id}">${curso.nombre}</option>`;
     });
@@ -455,7 +497,6 @@ const generarOptionsCursos = () => {
 
 const generarOptionsProfesores = () => {
     let options = '';
-    // Aquí iteras sobre la lista de profesores y generas las opciones
     listaProfesores.forEach(profesor => {
         options += `<option value="${profesor.id}">${profesor.nombre} ${profesor.apellido}</option>`;
     });
@@ -464,11 +505,16 @@ const generarOptionsProfesores = () => {
 
 const generarOptionsSalones = () => {
     let options = '';
-    // Aquí iteras sobre la lista de salones y generas las opciones
     listaSalones.forEach(salon => {
         options += `<option value="${salon.id}">${salon.numero_identificacion} - ${salon.edificio} - Piso ${salon.piso}</option>`;
     });
     return options;
 }
 
-
+const generarOptionProgramas = () => {
+    let options = ''
+    listaProgramas.forEach(programa => {
+        options += `<option value ="${programa.id}> ${programa.nombre} </option>`
+    })
+    return options
+}

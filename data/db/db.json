@@ -63,6 +63,14 @@
       "nombre": "María",
       "apellido": "Gómez",
       "departamento_id": 2
+    },
+    {
+      "id": 3,
+      "tipo_documento": "Cedula de extranjeria",
+      "numero_documento": "12345678",
+      "nombre": "Diego Fernando",
+      "apellido": "Carreño Torres",
+      "departamento_id": "1"
     }
   ],
   "alumnos": [
@@ -93,7 +101,7 @@
       "programa_id": 2
     },
     {
-      "id": 3,
+      "id": "3",
       "nombre": "Diego Fernando",
       "apellido": "Carreño Torres",
       "tipo_documento": "CC",
@@ -105,7 +113,7 @@
       "sexo": "Masculino"
     },
     {
-      "id": 4,
+      "id": "4",
       "nombre": "Camilo",
       "apellido": "Carreño Torres",
       "tipo_documento": "CC",
@@ -117,7 +125,7 @@
       "sexo": "Masculino"
     },
     {
-      "id": 5,
+      "id": "5",
       "nombre": "paula",
       "apellido": "galan",
       "tipo_documento": "CC",
@@ -127,6 +135,30 @@
       "telefono": "2345654435",
       "fecha_nacimiento": "2000-05-16",
       "sexo": "Femenino"
+    },
+    {
+      "id": 6,
+      "nombre": "Diego Fernando",
+      "apellido": "Carreño Torres",
+      "tipo_documento": "CC",
+      "numero_documento": "1098791617",
+      "ciudad_residencia": "Bucaramanga",
+      "direccion": "calle 103 # 12-86 altos de fontana",
+      "telefono": "3168664590",
+      "fecha_nacimiento": "2023-09-16",
+      "sexo": "Masculino"
+    },
+    {
+      "id": 7,
+      "nombre": "",
+      "apellido": "",
+      "tipo_documento": "",
+      "numero_documento": "",
+      "ciudad_residencia": "",
+      "direccion": "",
+      "telefono": "",
+      "fecha_nacimiento": "",
+      "sexo": ""
     }
   ],
   "cursos": [
@@ -196,6 +228,22 @@
           "hora_inicio": "10:00",
           "hora_fin": "12:00",
           "salon_id": 1
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "curso_id": "2",
+      "creditos": "3",
+      "profesor_id": "3",
+      "cupos_disponibles": "20",
+      "programa_id": "1> Ingeniería de Sistemas </option><option value =",
+      "horario_clases": [
+        {
+          "dia": "Lunes",
+          "hora_inicio": "06:00",
+          "hora_fin": "08:00",
+          "salon_id": "1"
         }
       ]
     }

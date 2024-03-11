@@ -336,7 +336,9 @@ main {
 }
 
 #listado-alumnos,
-#listado-profesores {
+#listado-profesores,
+#lista-asignaturas,
+#programas {
     flex-direction: column;
     justify-content: center;
     align-items: center;

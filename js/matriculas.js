@@ -34,15 +34,15 @@ const mostrarFormularioMatricula = () => {
 
 const generarOptionsEstudiantes = () => {
     let options = '';
-    listaEstudiantes.forEach(estudiante => {
-        options += `<option value="${estudiante.id}">${estudiante.nombre} ${estudiante.apellido}</option>`;
+    listaAlumnos.forEach(alumno => {
+        options += `<option value="${alumno.id}">${alumno.nombre} ${alumno.apellido}</option>`;
     });
     return options;
 };
 
 const generarOptionsAsignaturas = () => {
     let options = '';
-    listaAsignaturas.forEach(asignatura => {
+    listaAsignatura.forEach(asignatura => {
         options += `<option value="${asignatura.id}">${asignatura.nombre}</option>`;
     });
     return options;

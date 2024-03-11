@@ -1,3 +1,14 @@
+document.addEventListener("DOMContentLoaded", async () => {
+    await loadAlumnos();
+    await loadProfesores();
+    await loadDepartamentos();
+    await loadCursos();
+    await loadAsignaturas();
+    await loadProgramas();
+    await loadPeriodos()
+    await loadSalones()
+})
+
 const btnInicio = document.getElementById('inicio')
 const btnDpto = document.getElementById('departamentos')
 const btnCursos = document.getElementById('cursos')
@@ -74,6 +85,25 @@ btnMatriculas.addEventListener('click', () => {
     ocultarActiveBtn()
     btnMatriculas.classList.add('active')
     ocultarElementos()
+    mostrarFormularioMatricula()
     seccionMatriculas.style.display = 'flex'
     seccionMatriculas.style.height = "100%"
 })
+
+function reportes1(){
+    
+    let valorTotalPeriodo1= 0;
+    let valorTotalPeriodo2= 0;
+    
+    console.log(listaMatriculas)
+    for(matricula of listaMatriculas){
+        if(matricula["periodo_id"] == 1){
+            valorTotalPeriodo1 += matricula["precio"];
+        }
+        else{
+            valorTotalPeriodo2 += matricula["precio"]
+        }
+    }
+
+    console.log(valorTotalPeriodo1,valorTotalPeriodo2)
+}
