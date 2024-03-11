@@ -1,4 +1,3 @@
-
 const listaAlumnos =  []
 const listaProfesores = []
 const listaAsignatura = []
@@ -54,6 +53,7 @@ const mostrarFormularioAlumno = () => {
                         <input id="inputNombreAlumno" type="text" placeholder="Nombres del alumno" required>
                         <input id="inputApellidoAlumno" type="text" placeholder="Apellidos del alumno" required>
                         <select id="tipoDocumentoAlumno" required>
+                            <option value="" disabled selected hidden>- Seleccione el tipo de documento -</option>
                             <option value="CC">Cédula de ciudadanía</option>
                             <option value="Cedula de extranjeria">Cedula de extranjeria</option>
                             <option value="Tarjeta de identidad">Tarjeta de identidad</option>
@@ -64,14 +64,14 @@ const mostrarFormularioAlumno = () => {
                         <input type="tel" id="telefono" placeholder="Teléfono" required>
                         <input type="date" id="fechaNacimiento" required>
                         <select id="sexo" name="sexo" required>
-                            <option value="">-Elige el género-</option>
+                            <option value="" disabled selected hidden>- Seleccione el género -</option>
                             <option value="Masculino">Masculino</option>
                             <option value="Femenino">Femenino</option>
                         </select>
                     </div>
                     <div class="abajo-content-container">
-                        <button id="btnRegistrar">Registrar</button>
-                        <button id="btnVerListado">Ver Listado</button>
+                        <button id="btnRegistrar" onClick="crearAlumno()">Registrar</button>
+                        <button id="btnVerListado" onClick="mostrarListaAlumnos()">Ver Listado</button>
                     </div>
                 </div>
             </div>
@@ -81,6 +81,7 @@ const mostrarFormularioAlumno = () => {
 }
 
 const crearAlumno = async() => {
+
     const nombreAlumno = document.getElementById('inputNombreAlumno').value
     const apellidoAlumno = document.getElementById('inputApellidoAlumno').value
     const selectDocumento = document.getElementById('tipoDocumentoAlumno').value
@@ -126,9 +127,72 @@ const mostrarListaAlumnos = async() => {
 
     await loadAlumnos()
     
+    seccionFormAlumnos.style.display = 'none'
+    seccionListadoAlumnos.style.display = 'flex'
+    seccionListadoAlumnos.style.height = "100%"
 
+    const ul = document.createElement('ul')
 
+    for(const alumno of listaAlumnos) {
+        const li=document.createElement('li')
+        li.textContent = `id: ${alumno.id}, Nombre: ${alumno.nombre}, Apellido: ${alumno.apellido}`
+        ul.appendChild(li)
+    }
 
+    seccionListadoAlumnos.innerHTML=""
+    seccionListadoAlumnos.appendChild(ul)
+
+    const volverButton=document.createElement('button');
+    volverButton.textContent='Volver al Formulario';
+    volverButton.addEventListener('click',volverFormulario);
+    seccionListadoAlumnos.appendChild(volverButton);
+
+}
+
+const volverFormulario = () => {
+    seccionListadoAlumnos.style.display = "none"
+    seccionFormAlumnos.style.display = "flex"
+}
+
+// ---------------------------------------- SECCION DE REGISTRO PROFESORES ----------------------------------------
+
+const loadProfesores = async() => {
+    try {
+        listaProfesores.length = 0
+        const respuesta = await fetch(`http://localhost:3000/profesores`)
+        console.log(respuesta)
+
+        if(!respuesta.ok){
+            throw new Error('Error al cargar los profesores. Estado: ',respuesta.status);
+         }
+
+        const docente = await respuesta.json();
+        listaProfesores.push(...docente);
+
+    } catch (error) {
+        console.log("Error al cargar los profesores", error.message)
+    }
+}
+
+const guardarProfesores = async(nuevoProfesor) => {
+    try {
+        const respuesta = await fetch(`http://localhost:3000/profesores`, {
+            method:'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(nuevoProfesor)
+        })
+
+        if (!respuesta.ok) {
+            throw new Error('Error al guardar el profesor. Estado: ',respuesta.status);
+        }
+
+        const docenteCreado = await respuesta.json();
+        console.log("Profesor creado:", docenteCreado)
+    } catch (error) {
+        console.error("Error al guardar al profesor",error.message);
+    }
 }
 
 const mostrarFormularioProfesor = () => {
@@ -142,6 +206,7 @@ const mostrarFormularioProfesor = () => {
                 <div class="content-container">
                     <div class="arriba-content-container">
                         <select id="tipoDocumentoProfesor" required>
+                            <option value="" disabled selected hidden>- Seleccione el tipo de documento -</option>
                             <option value="CC">Cédula de ciudadanía</option>
                             <option value="Cedula de extranjeria">Cedula de extranjeria</option>
                             <option value="Tarjeta de identidad">Tarjeta de identidad</option>
@@ -149,10 +214,14 @@ const mostrarFormularioProfesor = () => {
                         <input type="text" id="numeroDocumentoProfesor" placeholder="Número documento" required>
                         <input id="inputNombreProfesor" type="text" placeholder="Nombres del profesor" required>
                         <input id="inputApellidoProfesor" type="text" placeholder="Apellidos del profesor" required>
+                        <select id="departamentoProfesor" required>
+                            <option value="" disabled selected hidden>- Seleccione departamento profesor-</option>
+                            ${generarOptionDepartamentos()}
+                        </select>
                     </div>
                     <div class="abajo-content-container">
-                        <button id="btnRegistrar">Registrar</button>
-                        <button id="btnVerListado">Ver Listado</button>
+                        <button id="btnRegistrar" onClick="crearProfesor()">Registrar</button>
+                        <button id="btnVerListado" onClick="mostrarListaProfesores()">Ver Listado</button>
                     </div>
                 </div>
             </div>
@@ -161,21 +230,245 @@ const mostrarFormularioProfesor = () => {
     `
 }
 
-const mostrarFormularioAsignatura = () => {
+const generarOptionDepartamentos = () => {
+    let options = ''
+    listaDepartamentos.forEach(departamento => {
+        options += `<option value="${departamento.id}">${departamento.nombre}</option>`;
+    });
+    return options
+}
 
+const crearProfesor = async() => {
+
+    const tipoDocumentoProfesor = document.getElementById('tipoDocumentoProfesor').value
+    const numeroDocumentoProfesor = document.getElementById('numeroDocumentoProfesor').value
+    const nombreProfesor = document.getElementById('inputNombreProfesor').value
+    const apellidoProfesor = document.getElementById('inputApellidoProfesor').value
+    const departamentoProfesor = document.getElementById('departamentoProfesor').value
+
+    const nuevoProfesor = {
+        id: listaProfesores.length+1,
+        tipo_documento: tipoDocumentoProfesor,
+        numero_documento: numeroDocumentoProfesor,
+        nombre: nombreProfesor,
+        apellido: apellidoProfesor,
+        departamento_id: departamentoProfesor
+    }
+
+    await guardarProfesores(nuevoProfesor)
+    await loadProfesores()
+
+    tipoDocumentoProfesor.value = ""
+    numeroDocumentoProfesor.value = ""
+    nombreProfesor.value = ""
+    apellidoProfesor.value = ""
+    departamentoProfesor.value = ""
+
+
+    alert("Docente creado con exito")
+
+    return nuevoProfesor
+
+}
+
+const mostrarListaProfesores = async () => {
+    await loadProfesores();
+
+    seccionFormProfesores.style.display = 'none';
+    seccionListadoProfesores.style.display = 'flex';
+    seccionListadoProfesores.style.height = "100%";
+
+    const ul = document.createElement('ul');
+
+    for (const profesor of listaProfesores) {
+        const li = document.createElement('li');
+        li.textContent = `id: ${profesor.id}, Nombre: ${profesor.nombre}, Apellido: ${profesor.apellido}`;
+        ul.appendChild(li);
+    }
+
+    // Eliminar el contenido anterior del contenedor
+    seccionListadoProfesores.innerHTML = "";
+
+    // Agregar la nueva lista al contenedor
+    seccionListadoProfesores.appendChild(ul);
+
+    const volverButton = document.createElement('button');
+    volverButton.textContent = 'Volver al Formulario';
+    volverButton.addEventListener('click', volverFormularioProfesores);
+    seccionListadoProfesores.appendChild(volverButton);
+}
+
+
+const volverFormularioProfesores = () => {
+    seccionListadoProfesores.style.display = "none"
+    seccionFormProfesores.style.display = "flex"
+}
+
+// ---------------------------------------- SECCION DE REGISTRO ASIGNATURAS ----------------------------------------
+const loadAsignaturas = async () => {
+    try {
+        listaAsignaturas.length = 0
+        const respuesta = await fetch(`http://localhost:3000/asignaturas`)
+        console.log(respuesta)
+
+        if (!respuesta.ok) {
+            throw new Error('Error al cargar las asignaturas. Estado:', respuesta.status)
+        }
+
+        const asignaturas = await respuesta.json()
+        listaAsignaturas.push(...asignaturas)
+    } catch (error) {
+        console.log("Error al cargar las asignaturas", error.message)
+    }
+}
+
+const mostrarFormularioAsignatura = () => {
     seccionFormAsignatura.innerHTML = `
-    
         <div class="contenedor-principal">
             <div class="arriba-contenedor">
                 <h1>Registrar Asignatura</h1>
             </div>
             <div class="under-container">
                 <div class="content-container">
-                    
+                    <div class="arriba-content-container">
+                        <select id="selectCursoId" required>
+                            <option value="" disabled selected hidden>- Seleccione un curso -</option>
+                            ${generarOptionsCursos()}
+                        </select>
+                        <input id="inputCodigo" type="text" placeholder="Código de la asignatura" readonly>
+                        <input id="inputCreditos" type="number" placeholder="Créditos" required>
+                        <select id="selectProfesorId" required>
+                            <option value="" disabled selected hidden>- Seleccione un profesor -</option>
+                            ${generarOptionsProfesores()}
+                        </select>
+                        <input id="inputCuposDisponibles" type="number" placeholder="Cupos disponibles" value="20" readonly>
+                        <input id="inputProgramaId" type="text" placeholder="Programa ID" required>
+                        <select id="selectDia1" required>
+                            <option value="" disabled selected hidden>- Seleccione un día -</option>
+                            <option value="Lunes">Lunes</option>
+                            <option value="Martes">Martes</option>
+                            <option value="Miércoles">Miércoles</option>
+                            <option value="Jueves">Jueves</option>
+                            <option value="Viernes">Viernes</option>
+                            <option value="Sábado">Sábado</option>
+                        </select>
+                        <input id="inputHoraInicio1" type="text" placeholder="Hora de inicio 1" required>
+                        <input id="inputHoraFin1" type="text" placeholder="Hora de fin 1" required>
+                        <select id="selectSalonId1" required>
+                            <option value="" disabled selected hidden>- Seleccione un salón -</option>
+                            ${generarOptionsSalones()}
+                        </select>
+                    </div>
+                    <div class="abajo-content-container">
+                        <button id="btnRegistrarAsignatura" onClick="crearAsignatura()">Registrar Asignatura</button>
+                    </div>
                 </div>
             </div>
         </div>
-
-    `
-
+    `;
 }
+
+const crearAsignatura = async() => {
+    try {
+        const cursoId = document.getElementById('selectCurso').value;
+        const codigoPeriodo = document.getElementById('selectPeriodo').value;
+
+        // Concatenar el código del curso y el período para formar el código de la asignatura
+        const codigoAsignatura = `${cursoId}-${codigoPeriodo}`;
+
+        const creditos = parseInt(document.getElementById('inputCreditos').value);
+        const profesorId = document.getElementById('selectProfesor').value;
+        let cuposDisponibles = 20; // Inicialmente se asignan 20 cupos disponibles
+
+        // Obtener el horario de clases seleccionado
+        const horarioClases = [];
+        const dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+        for (let i = 0; i < dias.length; i++) {
+            const dia = dias[i];
+            const horaInicio = document.getElementById(`horaInicio${dia}`).value;
+            const horaFin = document.getElementById(`horaFin${dia}`).value;
+            const salonId = document.getElementById(`selectSalon${dia}`).value;
+            if (horaInicio && horaFin && salonId) {
+                horarioClases.push({
+                    dia: dia,
+                    hora_inicio: horaInicio,
+                    hora_fin: horaFin,
+                    salon_id: salonId
+                });
+            }
+        }
+
+        // Crear objeto de nueva asignatura
+        const nuevaAsignatura = {
+            id: listaAsignaturas.length + 1,
+            curso_id: cursoId,
+            codigo: codigoAsignatura,
+            creditos: creditos,
+            profesor_id: profesorId,
+            cupos_disponibles: cuposDisponibles,
+            horario_clases: horarioClases
+        };
+
+        // Enviar la solicitud para guardar la asignatura
+        await guardarAsignatura(nuevaAsignatura);
+
+        // Actualizar la lista de asignaturas
+        await loadAsignaturas();
+
+        // Limpiar los campos del formulario
+        limpiarFormularioAsignatura();
+
+        // Mostrar un mensaje de éxito
+        alert("Asignatura creada con éxito");
+
+        return nuevaAsignatura;
+    } catch (error) {
+        console.error("Error al crear la asignatura", error.message);
+    }
+}
+
+const limpiarFormularioAsignatura = () => {
+    document.getElementById('inputCreditos').value = '';
+    document.getElementById('selectCurso').value = '';
+    document.getElementById('inputCodigo').value = '';
+    document.getElementById('selectProfesor').value = '';
+    
+    const dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+    for (let i = 0; i < dias.length; i++) {
+        const dia = dias[i];
+        document.getElementById(`horaInicio${dia}`).value = '';
+        document.getElementById(`horaFin${dia}`).value = '';
+        document.getElementById(`selectSalon${dia}`).value = '';
+    }
+}
+
+
+
+const generarOptionsCursos = () => {
+    let options = '';
+    // Aquí iteras sobre la lista de cursos y generas las opciones
+    listaCursos.forEach(curso => {
+        options += `<option value="${curso.id}">${curso.nombre}</option>`;
+    });
+    return options;
+}
+
+const generarOptionsProfesores = () => {
+    let options = '';
+    // Aquí iteras sobre la lista de profesores y generas las opciones
+    listaProfesores.forEach(profesor => {
+        options += `<option value="${profesor.id}">${profesor.nombre} ${profesor.apellido}</option>`;
+    });
+    return options;
+}
+
+const generarOptionsSalones = () => {
+    let options = '';
+    // Aquí iteras sobre la lista de salones y generas las opciones
+    listaSalones.forEach(salon => {
+        options += `<option value="${salon.id}">${salon.numero_identificacion} - ${salon.edificio} - Piso ${salon.piso}</option>`;
+    });
+    return options;
+}
+
+

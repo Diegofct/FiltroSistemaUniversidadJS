@@ -74,5 +74,6 @@ btnMatriculas.addEventListener('click', () => {
     ocultarActiveBtn()
     btnMatriculas.classList.add('active')
     ocultarElementos()
-    seccionMatriculas.style.display = 'block'
+    seccionMatriculas.style.display = 'flex'
+    seccionMatriculas.style.height = "100%"
 })

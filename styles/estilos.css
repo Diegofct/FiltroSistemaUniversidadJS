@@ -219,13 +219,15 @@ main {
 
 #seccion-formAlumno,
 #seccion-formProfesores,
-#seccion-formAsignatura {
+#seccion-formAsignatura,
+#seccion-matriculas {
     justify-content: center;
     align-items: center;
     width: 100%;
     background-color: #961818;
     gap: 2rem;
 }
+
 
 .contenedor-principal {
     width: 80%;
@@ -331,4 +333,15 @@ main {
     box-shadow: 0 0 30px lightblue;
     background: linear-gradient(to bottom right, #1680c7, #5a73a1 40%);
     cursor: pointer;
+}
+
+#listado-alumnos,
+#listado-profesores {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border: 1px solid;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
