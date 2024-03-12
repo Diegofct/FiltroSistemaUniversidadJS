@@ -74,53 +74,52 @@ const mostrarFormularioMatricula = () => {
 
 const crearMatricula = async () => {
     try {
-        const estudiantes = document.getElementById('selectEstudiante').value;
-        const asignaturaId= document.getElementById('selectAsignatura').value;
-        const periodo = document.getElementById('selectPeriodo').value;
-        
+        const estudianteId = document.getElementById('selectEstudiante').value;
+        const asignaturaId = document.getElementById('selectAsignatura').value;
+        const periodoId = document.getElementById('selectPeriodo').value;
 
+        // Validar campos
+        if (!estudianteId || !asignaturaId || !periodoId) {
+            alert("Por favor, complete todos los campos.");
+            return;
+        }
 
-        let precioMatricula= 0;
-        for(let asignatura of listaAsignatura){
-            if(asignatura.id == asignaturaId){
-                for(let tarifa of listaTarifas){
-                    console.log(tarifa.costo_credito ," ->", asignatura.creditos)
-                    if(tarifa.periodo_id == periodo && asignatura.programa_id == tarifa.programa_id){
+        let precioMatricula = 0;
+        for (let asignatura of listaAsignatura) {
+            if (asignatura.id == asignaturaId) {
+                for (let tarifa of listaTarifas) {
+                    if (tarifa.periodo_id == periodoId && asignatura.programa_id == tarifa.programa_id) {
                         precioMatricula = tarifa.costo_credito * asignatura.creditos;
                     }
                 }
             }
         }
 
-        // if(precioMatricula == 0){
-        //     alert("Asegurese de validar los datos");
-        //     return;
-        // }
-
         const nuevaMatricula = {
             id: listaMatriculas.length + 1,
-            estudiante_id: estudiantes,
+            estudiante_id: estudianteId,
             asignatura_id: asignaturaId,
-            periodo_id: periodo,
+            periodo_id: periodoId,
             precio: precioMatricula
         };
 
         await guardarMatricula(nuevaMatricula);
         await loadMatriculas();
 
-        estudiantes.value = ""
-        asignaturaId.value = ""
-        periodo.value = ""
+        // Limpiar campos después de crear la matrícula
+        document.getElementById('selectEstudiante').value = "";
+        document.getElementById('selectAsignatura').value = "";
+        document.getElementById('selectPeriodo').value = "";
 
-
-        alert("Asignatura creada con éxito");
+        alert("Matrícula creada con éxito");
 
         return nuevaMatricula;
 
     } catch (error) {
-        console.error("Error al crear la matricula", error.message);
+        console.error("Error al crear la matrícula", error.message);
     }
 }
+
 
 const mostrarListaMatriculas = async () => {
     await loadMatriculas();

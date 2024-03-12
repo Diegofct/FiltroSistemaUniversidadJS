@@ -5,6 +5,12 @@
       "codigo": "P24-01",
       "ano": 2024,
       "semestre": 1
+    },
+    {
+      "id": "2",
+      "codigo": "P23-02",
+      "ano": 2023,
+      "semestre": 1
     }
   ],
   "programas": [
@@ -102,6 +108,22 @@
       "nombre": "",
       "apellido": "",
       "departamento_id": ""
+    },
+    {
+      "id": 5,
+      "tipo_documento": "Cedula de extranjeria",
+      "numero_documento": "243544545",
+      "nombre": "Oscar",
+      "apellido": "Pinzon",
+      "departamento_id": "3"
+    },
+    {
+      "id": 6,
+      "tipo_documento": "CC",
+      "numero_documento": "1233454657",
+      "nombre": "Orlando",
+      "apellido": "Peña",
+      "departamento_id": "2"
     }
   ],
   "alumnos": [
@@ -193,6 +215,18 @@
     },
     {
       "id": 8,
+      "nombre": "",
+      "apellido": "",
+      "tipo_documento": "",
+      "numero_documento": "",
+      "ciudad_residencia": "",
+      "direccion": "",
+      "telefono": "",
+      "fecha_nacimiento": "",
+      "sexo": ""
+    },
+    {
+      "id": 9,
       "nombre": "",
       "apellido": "",
       "tipo_documento": "",

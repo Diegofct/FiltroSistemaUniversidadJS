@@ -29,11 +29,11 @@ const mostrarListadoDepartamentos = async () => {
     `;
 
     listaDepartamentos.forEach((departamento, index) => {
-        const activeClass = index === 0 ? 'active' : ''; // Añade la clase 'active' al primer elemento
+        const activeClass = index === 0 ? 'active' : '';
         html += `
             <div class="carousel-item ${activeClass}">
                 <img src="${departamento.imagen}" class="d-block w-100" alt="${departamento.nombre}">
-                <div id="slide-${departamento.nombre.replaceAll(" ","-")}" class="carousel-caption d-none d-md-block">
+                <div id="contentSlideText" class="carousel-caption d-none d-md-block">
                     <h5>${departamento.nombre}</h5>
                     <button class="btnSlide" id="btn-${departamento.nombre.replaceAll(" ","")}" onclick="mostraProgramas${departamento.nombre.replaceAll(" ","")}()">Ver detalles</button>
                 </div>
@@ -68,24 +68,28 @@ async function mostraProgramasDepartamentodeInformática(){
         console.log(programa)
         if(programa.nombre === "Ingeniería de Sistemas"){
             seccionProgramas.innerHTML += `
+            <div>
+                <h1>Programas</h1>
+            </div>
             <div class="card">
                 <h5 class="card-header">${programa.nombre}</h5>
                 <div class="card-body">
                     <p class="card-text">Nivel: ${programa.nivel}.</p>
                     <a href="#" class="btn btn-primary" onclick="volverAlSlide()">Volver</a>
                 </div>
+            </div>
             </div>
         `
         }
         if(programa.nombre === "Ingeniería en telecomunicaciones"){
             seccionProgramas.innerHTML += `
-            <div class="card">
-                <h5 class="card-header">${programa.nombre}</h5>
-                <div class="card-body">
-                    <p class="card-text">Nivel: ${programa.nivel}.</p>
-                    <a href="#" class="btn btn-primary" onclick="volverAlSlide()">Volver</a>
+                <div class="card">
+                    <h5 class="card-header">${programa.nombre}</h5>
+                    <div class="card-body">
+                        <p class="card-text">Nivel: ${programa.nivel}.</p>
+                        <a href="#" class="btn btn-primary" onclick="volverAlSlide()">Volver</a>
+                    </div>
                 </div>
-            </div>
         `
         }
 
@@ -102,6 +106,9 @@ async function mostraProgramasDepartamentodeMatemáticas() {
         console.log(programa)
         if(programa.nombre === "Licenciatura en Matemáticas"){
             seccionProgramas.innerHTML += `
+            <div>
+                <h1>Programas</h1>
+            </div>
             <div class="card">
                 <h5 class="card-header">${programa.nombre}</h5>
                 <div class="card-body">
@@ -135,6 +142,9 @@ async function mostraProgramasDepartamentodeIdiomas() {
         console.log(programa)
         if(programa.nombre === "Licenciatura en idioma extranjero"){
             seccionProgramas.innerHTML += `
+            <div>
+                <h1>Programas</h1>
+            </div>
             <div class="card">
                 <h5 class="card-header">${programa.nombre}</h5>
                 <div class="card-body">

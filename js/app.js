@@ -40,6 +40,7 @@ const ocultarElementos = () => {
     seccionMatriculas.style.display = "none"
     seccionListaMatriculas.style.display = "none"
     seccionReportes.style.display = "none"
+    seccionProgramas.style.display = "none"
 }
 
 

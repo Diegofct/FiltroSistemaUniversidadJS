@@ -93,6 +93,11 @@ const crearAlumno = async() => {
     const fechaNacimiento = document.getElementById('fechaNacimiento').value
     const genero = document.getElementById('sexo').value
 
+    if (!nombreAlumno || !apellidoAlumno || !selectDocumento || !numeroDocumentoAlumno || !ciudadResidencia || !direccion || !telefono || !fechaNacimiento || !genero) {
+        alert("Por favor, complete todos los campos.");
+        return;
+    }
+
     const nuevoAlumno = {
         id: listaAlumnos.length+1,
         nombre: nombreAlumno,
@@ -119,7 +124,9 @@ const crearAlumno = async() => {
     fechaNacimiento.value = ''
     genero.value = ''
 
+ 
     alert("Alumno creado con exito")
+
 
     return nuevoAlumno
 }
@@ -247,6 +254,11 @@ const crearProfesor = async() => {
     const apellidoProfesor = document.getElementById('inputApellidoProfesor').value
     const departamentoProfesor = document.getElementById('departamentoProfesor').value
 
+    if (!tipoDocumentoProfesor || !numeroDocumentoProfesor || !nombreProfesor || !apellidoProfesor || !departamentoProfesor) {
+        alert("Por favor, complete todos los campos.");
+        return; // Detener la función si algún campo está vacío
+    }
+
     const nuevoProfesor = {
         id: listaProfesores.length+1,
         tipo_documento: tipoDocumentoProfesor,
@@ -265,8 +277,9 @@ const crearProfesor = async() => {
     apellidoProfesor.value = ""
     departamentoProfesor.value = ""
 
-
-    alert("Docente creado con exito")
+    setTimeout(() => {
+        alert("Docente creado con exito")
+    }, 3000)
 
     return nuevoProfesor
 
@@ -415,6 +428,11 @@ const crearAsignatura = async () => {
             if(curso.id == cursoId){//curso.codigo
                 codigoAsignatura = curso.codigo + "-" + selectPeriodo
             }
+        }
+
+        if (!cursoId || !selectPeriodo || !creditos || !profesorId || !cuposDisponibles || !programaId || !dia || !horaInicio || !horaFin || !salonId) {
+            alert("Por favor, complete todos los campos.");
+            return;
         }
 
         const nuevaAsignatura = {
