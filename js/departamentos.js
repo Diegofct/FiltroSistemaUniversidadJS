@@ -62,6 +62,7 @@ const mostrarListadoDepartamentos = async () => {
 async function mostraProgramasDepartamentodeInformática(){
     await loadProgramas()
     seccionDepartamento.style.display = "none"
+    seccionProgramas.style.display = "flex"
     seccionProgramas.innerHTML = ""
     listaProgramas.forEach(programa =>{
         console.log(programa)

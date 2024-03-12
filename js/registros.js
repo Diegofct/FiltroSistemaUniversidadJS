@@ -357,6 +357,10 @@ const mostrarFormularioAsignatura = () => {
                             <option value="" disabled selected hidden>- Seleccione un curso -</option>
                             ${generarOptionsCursos()}
                         </select>
+                        <select id="selectPeriodoId" required>
+                            <option value="" disabled selected hidden>- Seleccione el periodo -</option>
+                            ${generarOptionPeriodos()}
+                        </select>
                         <input id="inputCreditos" type="number" placeholder="Créditos" required>
                         <select id="selectProfesorId" required>
                             <option value="" disabled selected hidden>- Seleccione un profesor -</option>
@@ -397,6 +401,7 @@ const mostrarFormularioAsignatura = () => {
 const crearAsignatura = async () => {
     try {
         const cursoId = document.getElementById('selectCursoId').value;
+        const selectPeriodo = document.getElementById('selectPeriodoId').value;
         const creditos = document.getElementById('inputCreditos').value;
         const profesorId = document.getElementById('selectProfesorId').value;
         const cuposDisponibles = document.getElementById('inputCuposDisponibles').value;
@@ -405,10 +410,17 @@ const crearAsignatura = async () => {
         const horaInicio = document.getElementById('inputHoraInicio').value;
         const horaFin = document.getElementById('inputHoraFin').value;
         const salonId = document.getElementById('selectSalonId').value;
+        let codigoAsignatura = "";
+        for(let curso of listaCursos){
+            if(curso.id == cursoId){//curso.codigo
+                codigoAsignatura = curso.codigo + "-" + selectPeriodo
+            }
+        }
 
         const nuevaAsignatura = {
             id: listaAsignatura.length + 1,
             curso_id: cursoId,
+            codigo: codigoAsignatura,
             creditos: creditos,
             profesor_id: profesorId,
             cupos_disponibles: cuposDisponibles,
@@ -514,7 +526,15 @@ const generarOptionsSalones = () => {
 const generarOptionProgramas = () => {
     let options = ''
     listaProgramas.forEach(programa => {
-        options += `<option value ="${programa.id}> ${programa.nombre} </option>`
+        options += `<option value ="${programa.id}"> ${programa.nombre} </option>`
+    })
+    return options
+}
+
+const generarOptionPeriodos = () => {
+    let options = ''
+    listaPeriodos.forEach(periodo => {
+        options += `<option value ="${periodo.codigo}"> ${periodo.codigo} </option>`
     })
     return options
 }

@@ -65,12 +65,20 @@
       "departamento_id": 2
     },
     {
-      "id": 3,
+      "id": "3",
       "tipo_documento": "Cedula de extranjeria",
       "numero_documento": "12345678",
       "nombre": "Diego Fernando",
       "apellido": "Carreño Torres",
       "departamento_id": "1"
+    },
+    {
+      "id": 4,
+      "tipo_documento": "",
+      "numero_documento": "",
+      "nombre": "",
+      "apellido": "",
+      "departamento_id": ""
     }
   ],
   "alumnos": [
@@ -137,7 +145,7 @@
       "sexo": "Femenino"
     },
     {
-      "id": 6,
+      "id": "6",
       "nombre": "Diego Fernando",
       "apellido": "Carreño Torres",
       "tipo_documento": "CC",
@@ -149,7 +157,19 @@
       "sexo": "Masculino"
     },
     {
-      "id": 7,
+      "id": "7",
+      "nombre": "",
+      "apellido": "",
+      "tipo_documento": "",
+      "numero_documento": "",
+      "ciudad_residencia": "",
+      "direccion": "",
+      "telefono": "",
+      "fecha_nacimiento": "",
+      "sexo": ""
+    },
+    {
+      "id": 8,
       "nombre": "",
       "apellido": "",
       "tipo_documento": "",
@@ -233,16 +253,17 @@
     },
     {
       "id": 3,
-      "curso_id": "2",
+      "curso_id": "1",
+      "codigo": "PROG-AVA-P24-01",
       "creditos": "3",
-      "profesor_id": "3",
+      "profesor_id": "2",
       "cupos_disponibles": "20",
-      "programa_id": "1> Ingeniería de Sistemas </option><option value =",
+      "programa_id": "2",
       "horario_clases": [
         {
-          "dia": "Lunes",
-          "hora_inicio": "06:00",
-          "hora_fin": "08:00",
+          "dia": "Miércoles",
+          "hora_inicio": "08:00",
+          "hora_fin": "10:00",
           "salon_id": "1"
         }
       ]
@@ -262,6 +283,13 @@
       "asignatura_id": 2,
       "periodo_id": 1,
       "precio": 3300
+    },
+    {
+      "id": 3,
+      "estudiante_id": "4",
+      "asignatura_id": "1",
+      "periodo_id": "1",
+      "precio": 4000
     }
   ]
 }

@@ -1,5 +1,44 @@
 const listaMatriculas = []
 
+const loadMatriculas = async() => {
+    try {
+        listaMatriculas.length = 0
+        const respuesta = await fetch(`http://localhost:3000/matriculas`)
+        console.log(respuesta)
+
+        if(!respuesta.ok){
+            throw new Error('Error al cargar las matriculas. Estado: ',respuesta.status);
+         }
+
+        const matriculas = await respuesta.json();
+        listaMatriculas.push(...matriculas);
+
+    } catch (error) {
+        console.log("Error al cargar las matriculas", error.message)
+    }
+}
+
+const guardarMatricula = async(nuevaMatricula) => {
+    try {
+        const respuesta = await fetch(`http://localhost:3000/matriculas`, {
+            method:'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(nuevaMatricula)
+        })
+
+        if (!respuesta.ok) {
+            throw new Error('Error al guardar la matricula. Estado: ',respuesta.status);
+        }
+
+        const matriculaCreada = await respuesta.json();
+        console.log("Matricula creada:", matriculaCreada)
+    } catch (error) {
+        console.error("Error al guardar la matricula",error.message);
+    }
+}
+
 const mostrarFormularioMatricula = () => {
     seccionMatriculas.innerHTML = `
         <div class="contenedor-principal">
@@ -21,16 +60,101 @@ const mostrarFormularioMatricula = () => {
                             <option value="" disabled selected hidden>- Seleccione un período -</option>
                             ${generarOptionsPeriodos()}
                         </select>
-                        <input type="number" id="inputPrecio" placeholder="Precio" required>
+                        <span></span>
                     </div>
                     <div class="abajo-content-container">
-                        <button id="btnMatricular" onClick="matricularEstudiante()">Matricular</button>
+                        <button id="btnMatricular" onClick="crearMatricula()">Matricular</button>
+                        <button id="btnListaMatricula" onClick="mostrarListaMatriculas()">Ver Listado</button>
                     </div>
                 </div>
             </div>
         </div>
     `;
 };
+
+const crearMatricula = async () => {
+    try {
+        const estudiantes = document.getElementById('selectEstudiante').value;
+        const asignaturaId= document.getElementById('selectAsignatura').value;
+        const periodo = document.getElementById('selectPeriodo').value;
+        
+
+
+        let precioMatricula= 0;
+        for(let asignatura of listaAsignatura){
+            if(asignatura.id == asignaturaId){
+                for(let tarifa of listaTarifas){
+                    console.log(tarifa.costo_credito ," ->", asignatura.creditos)
+                    if(tarifa.periodo_id == periodo && asignatura.programa_id == tarifa.programa_id){
+                        precioMatricula = tarifa.costo_credito * asignatura.creditos;
+                    }
+                }
+            }
+        }
+
+        // if(precioMatricula == 0){
+        //     alert("Asegurese de validar los datos");
+        //     return;
+        // }
+
+        const nuevaMatricula = {
+            id: listaMatriculas.length + 1,
+            estudiante_id: estudiantes,
+            asignatura_id: asignaturaId,
+            periodo_id: periodo,
+            precio: precioMatricula
+        };
+
+        await guardarMatricula(nuevaMatricula);
+        await loadMatriculas();
+
+        estudiantes.value = ""
+        asignaturaId.value = ""
+        periodo.value = ""
+
+
+        alert("Asignatura creada con éxito");
+
+        return nuevaMatricula;
+
+    } catch (error) {
+        console.error("Error al crear la matricula", error.message);
+    }
+}
+
+const mostrarListaMatriculas = async () => {
+    await loadMatriculas();
+
+    seccionMatriculas.style.display = 'none';
+    seccionListaMatriculas.style.display = 'flex';
+    seccionListaMatriculas.style.height = "100%";
+
+    const ul = document.createElement('ul');
+
+    for (const matricula of listaMatriculas) {
+        const li = document.createElement('li');
+        li.textContent = `id: ${matricula.id}, Estudiante: ${matricula.estudiante_id}, : Asignatura: ${matricula.asignatura_id}`;
+        ul.appendChild(li);
+    }
+
+    // Eliminar el contenido anterior del contenedor
+    seccionListaMatriculas.innerHTML = "";
+
+    // Agregar la nueva lista al contenedor
+    seccionListaMatriculas.appendChild(ul);
+
+    const volverButton = document.createElement('button');
+    volverButton.textContent = 'Volver al Formulario';
+    volverButton.addEventListener('click', volverFormularioMatricula);
+    seccionListaMatriculas.appendChild(volverButton);
+}
+
+
+const volverFormularioMatricula = () => {
+    seccionListaMatriculas.style.display = "none"
+    seccionMatriculas.style.display = "flex"
+}
+
 
 const generarOptionsEstudiantes = () => {
     let options = '';
@@ -43,7 +167,7 @@ const generarOptionsEstudiantes = () => {
 const generarOptionsAsignaturas = () => {
     let options = '';
     listaAsignatura.forEach(asignatura => {
-        options += `<option value="${asignatura.id}">${asignatura.nombre}</option>`;
+        options += `<option value="${asignatura.id}">${asignatura.codigo}</option>`;
     });
     return options;
 };

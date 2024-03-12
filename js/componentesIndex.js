@@ -12,6 +12,8 @@ const seccionListadoProfesores = document.getElementById('listado-profesores')
 const seccionFormAsignatura = document.getElementById('seccion-formAsignatura')
 const seccionListaAsignaturas = document.getElementById('lista-asignaturas')
 const seccionMatriculas = document.getElementById('seccion-matriculas')
+const seccionListaMatriculas = document.getElementById('seccion-listaMatriculas')
+const seccionReportes = document.getElementById('seccion-reportes')
 
 const cargarSeccionInicio = () => {
     seccionInicio.innerHTML = `

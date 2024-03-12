@@ -5,8 +5,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     await loadCursos();
     await loadAsignaturas();
     await loadProgramas();
-    await loadPeriodos()
-    await loadSalones()
+    await loadPeriodos();
+    await loadSalones();
+    await loadTarifas();
+    await loadMatriculas();
 })
 
 const btnInicio = document.getElementById('inicio')
@@ -36,6 +38,8 @@ const ocultarElementos = () => {
     seccionListadoAlumnos.style.display = "none"
     seccionListadoProfesores.style.display = "none"
     seccionMatriculas.style.display = "none"
+    seccionListaMatriculas.style.display = "none"
+    seccionReportes.style.display = "none"
 }
 
 
