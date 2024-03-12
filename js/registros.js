@@ -130,7 +130,7 @@ const mostrarListaAlumnos = async() => {
     
     seccionFormAlumnos.style.display = 'none'
     seccionListadoAlumnos.style.display = 'flex'
-    seccionListadoAlumnos.style.height = "100%"
+    seccionListadoAlumnos.style.height = "60%"
 
     const ul = document.createElement('ul')
 
@@ -277,7 +277,7 @@ const mostrarListaProfesores = async () => {
 
     seccionFormProfesores.style.display = 'none';
     seccionListadoProfesores.style.display = 'flex';
-    seccionListadoProfesores.style.height = "100%";
+    seccionListadoProfesores.style.height = "60%";
 
     const ul = document.createElement('ul');
 
@@ -471,7 +471,7 @@ const mostrarListaAsignaturas = async () => {
 
     seccionFormAsignatura.style.display = 'none';
     seccionListaAsignaturas.style.display = 'flex';
-    seccionListaAsignaturas.style.height = "100%";
+    seccionListaAsignaturas.style.height = "60%";
 
     const ul = document.createElement('ul');
 

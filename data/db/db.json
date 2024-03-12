@@ -17,6 +17,26 @@
       "id": "2",
       "nombre": "Ingeniería de Mecatronica",
       "nivel": "Pregrado"
+    },
+    {
+      "id": "3",
+      "nombre": "Licenciatura en Matemáticas",
+      "nivel": "Pregrado"
+    },
+    {
+      "id": "4",
+      "nombre": "Matemática pura",
+      "nivel": "Pregrado"
+    },
+    {
+      "id": "5",
+      "nombre": "Licenciatura en idioma extranjero",
+      "nivel": "Pregrado"
+    },
+    {
+      "id": "6",
+      "nombre": "Ingeniería en telecomunicaciones",
+      "nivel": "Pregrado"
     }
   ],
   "tarifas": [
@@ -36,14 +56,17 @@
   "departamentos": [
     {
       "id": "1",
+      "imagen": "../img/informatica.jpg",
       "nombre": "Departamento de Informática"
     },
     {
       "id": "2",
+      "imagen": "../img/matematicas.jpg",
       "nombre": "Departamento de Matemáticas"
     },
     {
       "id": "3",
+      "imagen": "../img/idiomas.jpg",
       "nombre": "Departamento de Idiomas"
     }
   ],
@@ -192,6 +215,18 @@
       "id": "2",
       "nombre": "Álgebra Lineal",
       "codigo": "ALG-LI",
+      "guia_catedra": "URL_Guia_Catedra.pdf"
+    },
+    {
+      "id": "3",
+      "nombre": "Inglés",
+      "codigo": "IGL",
+      "guia_catedra": "URL_Guia_Catedra.pdf"
+    },
+    {
+      "id": "4",
+      "nombre": "Adm. Servidores",
+      "codigo": "ADM-SERV",
       "guia_catedra": "URL_Guia_Catedra.pdf"
     }
   ],

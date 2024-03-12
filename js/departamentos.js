@@ -32,7 +32,7 @@ const mostrarListadoDepartamentos = async () => {
         const activeClass = index === 0 ? 'active' : ''; // Añade la clase 'active' al primer elemento
         html += `
             <div class="carousel-item ${activeClass}">
-                <img src="img/medicina.jpg" class="d-block w-100" alt="${departamento.nombre}">
+                <img src="${departamento.imagen}" class="d-block w-100" alt="${departamento.nombre}">
                 <div id="slide-${departamento.nombre.replaceAll(" ","-")}" class="carousel-caption d-none d-md-block">
                     <h5>${departamento.nombre}</h5>
                     <button class="btnSlide" id="btn-${departamento.nombre.replaceAll(" ","")}" onclick="mostraProgramas${departamento.nombre.replaceAll(" ","")}()">Ver detalles</button>
@@ -62,7 +62,7 @@ const mostrarListadoDepartamentos = async () => {
 async function mostraProgramasDepartamentodeInformática(){
     await loadProgramas()
     seccionDepartamento.style.display = "none"
-    seccionProgramas.style.display = "flex"
+    seccionProgramas.style.display = "grid"
     seccionProgramas.innerHTML = ""
     listaProgramas.forEach(programa =>{
         console.log(programa)
@@ -71,8 +71,18 @@ async function mostraProgramasDepartamentodeInformática(){
             <div class="card">
                 <h5 class="card-header">${programa.nombre}</h5>
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">${programa.nivel}.</p>
+                    <p class="card-text">Nivel: ${programa.nivel}.</p>
+                    <a href="#" class="btn btn-primary" onclick="volverAlSlide()">Volver</a>
+                </div>
+            </div>
+        `
+        }
+        if(programa.nombre === "Ingeniería en telecomunicaciones"){
+            seccionProgramas.innerHTML += `
+            <div class="card">
+                <h5 class="card-header">${programa.nombre}</h5>
+                <div class="card-body">
+                    <p class="card-text">Nivel: ${programa.nivel}.</p>
                     <a href="#" class="btn btn-primary" onclick="volverAlSlide()">Volver</a>
                 </div>
             </div>
@@ -80,7 +90,65 @@ async function mostraProgramasDepartamentodeInformática(){
         }
 
     })
-} 
+}
+
+async function mostraProgramasDepartamentodeMatemáticas() {
+
+    await loadProgramas()
+    seccionDepartamento.style.display = "none"
+    seccionProgramas.style.display = "grid"
+    seccionProgramas.innerHTML = ""
+    listaProgramas.forEach(programa =>{
+        console.log(programa)
+        if(programa.nombre === "Licenciatura en Matemáticas"){
+            seccionProgramas.innerHTML += `
+            <div class="card">
+                <h5 class="card-header">${programa.nombre}</h5>
+                <div class="card-body">
+                    <p class="card-text">Nivel: ${programa.nivel}.</p>
+                    <a href="#" class="btn btn-primary" onclick="volverAlSlide()">Volver</a>
+                </div>
+            </div>
+        `
+        }
+        if(programa.nombre === "Matemática pura"){
+            seccionProgramas.innerHTML += `
+            <div class="card">
+                <h5 class="card-header">${programa.nombre}</h5>
+                <div class="card-body">
+                    <p class="card-text">Nivel: ${programa.nivel}.</p>
+                    <a href="#" class="btn btn-primary" onclick="volverAlSlide()">Volver</a>
+                </div>
+            </div>
+        `
+        }
+
+    })
+}
+
+async function mostraProgramasDepartamentodeIdiomas() {
+    await loadProgramas()
+    seccionDepartamento.style.display = "none"
+    seccionProgramas.style.display = "grid"
+    seccionProgramas.innerHTML = ""
+    listaProgramas.forEach(programa =>{
+        console.log(programa)
+        if(programa.nombre === "Licenciatura en idioma extranjero"){
+            seccionProgramas.innerHTML += `
+            <div class="card">
+                <h5 class="card-header">${programa.nombre}</h5>
+                <div class="card-body">
+                    <p class="card-text">Nivel: ${programa.nivel}.</p>
+                    <a href="#" class="btn btn-primary" onclick="volverAlSlide()">Volver</a>
+                </div>
+            </div>
+        `
+        }
+
+    })
+}
+
+
 
 const volverAlSlide = () => {
     seccionProgramas.style.display = "none"

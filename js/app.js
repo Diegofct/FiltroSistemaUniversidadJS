@@ -75,11 +75,11 @@ btnRegistrar.addEventListener('click', async () => {
     btnRegistrar.classList.add('active')
     ocultarElementos()
     seccionFormAlumnos.style.display = "flex"
-    seccionFormAlumnos.style.height = "100%"
+    seccionFormAlumnos.style.height = "60%"
     seccionFormProfesores.style.display = "flex"
-    seccionFormProfesores.style.height = "100%"
+    seccionFormProfesores.style.height = "60%"
     seccionFormAsignatura.style.display = "flex"
-    seccionFormAsignatura.style.height = "100%"
+    seccionFormAsignatura.style.height = "60%"
     mostrarFormularioAlumno()
     mostrarFormularioProfesor()
     mostrarFormularioAsignatura()
